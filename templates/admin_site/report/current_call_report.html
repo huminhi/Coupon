@@ -1,0 +1,16 @@
+{% extends "grid_v2.html" %}
+{% load i18n %}
+{% block title %}Admin - Current Call Report - Admin Portal{% endblock %}
+{% block grid_content %}
+	<div id="content-main">
+		<h1>Current Call Report</h1>
+		<br />
+	    <table id="rowed1" width="100%" height="100%"></table>
+		<div id="prowed1"></div>
+		<br />
+	</div>
+
+	<script src="/media/js/jquery-ui-1.8.2.custom.min.js" type="text/javascript"> </script>
+	<script src="/media/js/jquery.tools.min.js" type="text/javascript"> </script>
+	<script src="/media/jqgrid/admin_site/report/currentcallrpt.js" type="text/javascript"> </script>
+{% endblock %}

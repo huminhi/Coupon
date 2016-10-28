@@ -1,0 +1,53 @@
+<style type="text/css">
+	#chartdiv .jqplot-point-label {
+	  border: 1.5px solid #aaaaaa;
+	  padding: 1px 3px;
+	  background-color: #FFD478;
+	}
+</style>
+
+<div id="chartdiv" style="height:200px;width:1000px;margin: 0 auto 0 auto"></div>
+
+<script type="text/javascript" src="/media/jqPlot/plugins/jqplot.dateAxisRenderer.min.js"></script>
+<script type="text/javascript" src="/media/jqPlot/plugins/jqplot.canvasTextRenderer.min.js"></script>
+<script type="text/javascript" src="/media/jqPlot/plugins/jqplot.canvasAxisTickRenderer.min.js"></script>
+<script type="text/javascript" src="/media/jqPlot/plugins/jqplot.highlighter.min.js"></script>
+<script type="text/javascript" src="/media/jqPlot/plugins/jqplot.enhancedLegendRenderer.min.js"></script>
+<script type="text/javascript">
+	$.jqplot.config.enablePlugins = true;
+	
+	var plot1 = null;
+	function renderChart(data) {
+		$("#chartdiv").html("");
+		plot1 = $.jqplot('chartdiv', [data.ChartData], {
+	      	legend:{show:true, renderer:$.jqplot.EnhancedLegendRenderer},
+	        stackSeries: true,
+	        grid:{background:'#fefbf3', borderWidth:2.5},
+	        seriesDefaults: {
+	            showMarker: true, 
+	        },
+	        axes: {
+	        	xaxis: {
+	        		//min: data.xMin,
+	        		//max: data.xMax,
+	        		renderer:$.jqplot.DateAxisRenderer,
+	        		//tickOptions:{
+	                //   formatString:'%b %#d, %Y %H:%M', 
+	                //   fontSize:'10pt', 
+	                //   fontFamily:'Tahoma', 
+	                //   angle:-30
+	            	//},
+	        	},
+	            yaxis: {
+	                min: 0,
+	                //max: data.yMax,
+	                tickOptions: {
+	                    formatString: '%d'
+	                }
+	            }
+	        },
+	        series:[{color:'rgba(0, 105, 209, 0.8)', label:'Total Used', breakOnNull: true}],
+	    });
+	}
+
+</script>

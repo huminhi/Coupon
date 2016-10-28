@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ LANGUAGE_CODE }}" xml:lang="{{ LANGUAGE_CODE }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
+<head>
+    <title>500 Error</title>
+    <meta name="robots" content="NONE,NOARCHIVE" />
+</head>
+
+<body style="background-color: #EEE; font-family:Verdana; font-size: 10pt">
+    <div style="height:120px; width: 500px; background-color: white;border: 1px solid gray;margin: 150px auto 0 auto;">
+        <div style="background-color: #417690;color: #FFC;">
+            <div style="color: #FFC;height: 38px;">
+                <h1 style="text-align: center; font-size: 18px; font-weight: normal;font-family: Verdana;margin:0;padding-top:8px;padding-left:8px">
+                    500 Error
+                </h1>
+                <div style="color: black; padding: 10px">
+                    <p style="text-align: center;">We're sorry, but the requested page got error.</p>
+                    <p style="text-align: center;"><a href="/">Go to Home Page</a></p>
+                </div>
+                {% if perms.admin.development %}
+                <div style="margin: 10px auto 0 auto; padding-right: 7px">
+                    <textarea rows="20" style="width: 100%" readonly="readonly">{{ exception }}</textarea>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

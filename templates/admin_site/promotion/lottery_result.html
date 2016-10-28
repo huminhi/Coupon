@@ -1,0 +1,68 @@
+{% extends "grid.html" %}
+{% load i18n %}
+
+{% block grid_content %}
+	<style type="text/css">
+		input.bigfont {
+			font-size: 24pt;
+		}
+	</style>
+	<div id="content-main">
+		<h1>Promotion Result</h1>
+		<div style="width: 370px; margin: 0 auto 0 auto;">
+			<table>
+				<tr>
+					<td><input id="id_cbo_1" class="bigfont" style="width: 50px; text-align: center;" name="id_a_1"/></td>
+					<td><input id="id_cbo_2" class="bigfont" style="width: 50px; text-align: center;" name="id_a_2"/></td>
+					<td><input id="id_cbo_3" class="bigfont" style="width: 50px; text-align: center;" name="id_a_3"/></td>
+					<td><input id="id_cbo_4" class="bigfont" style="width: 50px; text-align: center;" name="id_a_4"/></td>
+					<td><input id="id_cbo_5" class="bigfont" style="width: 50px; text-align: center;" name="id_a_5"/></td>
+				<tr>
+					<td colspan="7">
+						<div style="width:210px; margin: 0 auto 0 auto;">
+							<table>
+								<tr>
+									<td><a style="font-size: 36pt;" id="id_a_1"></a></td>
+									<td><a style="font-size: 36pt;" id="id_a_2"></a></td>
+									<td><a style="font-size: 36pt;" id="id_a_3"></a></td>
+									<td><a style="font-size: 36pt;" id="id_a_4"></a></td>
+									<td><a style="font-size: 36pt;" id="id_a_5"></a></td>
+								</tr>
+							</table>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div style="width:800px; margin: 0 auto 0 auto">
+			<table id="rowed1" width="100%" height="100%"></table>
+			<div id="prowed1"></div>
+		</div>
+		<input id="id_cbo_6" class="bigfont" style="width: 30px; display: none;" name="id_a_6"/>
+		<input id="id_cbo_7" class="bigfont" style="width: 30px; display: none;" name="id_a_7"/>
+		<a style="font-size: 24pt;" id="id_a_6"></a>
+		<a style="font-size: 24pt;" id="id_a_7"></a>
+		
+	</div>
+	
+	<script src="/media/js/jquery-ui-1.8.2.custom.min.js" type="text/javascript"> </script>
+	<script src="/media/js/jquery.tools.min.js" type="text/javascript"> </script>
+	<script src="/media/js/jquery.maskedinput-1.2.2.min.js" type="text/javascript"> </script>
+	<script src="/media/jqgrid/admin_site/promotion/lottery.js" type="text/javascript"> </script>
+	<script type="text/javascript">
+		initialize();
+		
+		function initialize() {
+			for (var i = 1; i <= 7; i++) {
+				$("#id_cbo_" + i).mask("9");
+				$("#id_a_" + i).hide();
+				$("#id_cbo_" + i).blur(function () {
+					$("#" + $(this).attr("name")).html($(this).val());
+					$("#" + $(this).attr("name")).fadeIn(500);
+
+					reloadGrid("#rowed1");
+				});
+			}
+		}
+	</script>
+{% endblock %}

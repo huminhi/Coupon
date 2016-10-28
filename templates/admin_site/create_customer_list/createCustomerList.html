@@ -1,0 +1,570 @@
+{% extends "v2/layout_base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans 'ATS - Create Customer List - Admin Portal' %}{% endblock %}
+{% block page_title %}{% trans 'Accounting Tracking System - Create Customer List' %}{% endblock %}
+
+{% block extrastyle %}
+{{block.super }}
+<style type="text/css">
+    td {
+        padding-top: 2px;
+        padding-bottom: 2px;
+    }
+    .textalignright div { padding-right: 5px; }
+	/* .ui-autocomplete { position: absolute; cursor: default;z-index:990 !important;}*/
+	.ui-autocomplete { z-index: 9999 !important; }      
+</style>
+{% endblock %}
+ 
+{% block content %}
+{% endblock %}
+
+{% block centerpanecontent %}
+	<div id="content-main">
+		<h1>Custom SMS Campaign</h1>
+		<form id="formFilter1" onsubmit="return false;">
+			<table>
+	            <tr>
+	                <table id='id_table_topup'>
+			            <tr>
+			                <td style="vertical-align: middle;">Country:</td>
+			                <td style="vertical-align: middle;">
+			                    <select id="id_cbo_country" name="countryId" style="width: 200px">
+			                        <option value="">ALL</option>
+			                        {% for item in countries %}
+			                        <option value="{{ item.0 }}">{{ item.1 }}</option>
+			                        {% endfor %}
+			                    </select>
+			                </td>
+			                <td style="vertical-align: middle;">Operator:</td>
+			                <td style="vertical-align: middle;">
+			                    <select id="id_cbo_operator" name="operatorId"style="width: 200px">
+			                        <option value="">ALL</option>
+			                        {% for item in carriers %}
+			                        <option value="{{ item.0 }}">{{ item.1 }}</option>
+			                        {% endfor %}
+			                    </select>
+			                </td>
+			                <td style="vertical-align: middle;">Language:</td>
+			                <td style="vertical-align: middle;">
+			                    <select id="id_cbo_language" name="language" style="width: 200px">
+			                    	<option value="">ALL</option>
+			                    	{% for item in languages %}
+			                        <option value="{{ item.0 }}">{{ item.1 }}</option>
+			                        {% endfor %}
+			                    </select>
+			                </td>
+			                
+			            </tr>
+			            <tr>
+			            	<td style="vertical-align: middle;">Company:</td>
+			                <td style="vertical-align: middle;">
+			                    <select id="id_cbo_company" name="companyId" style="width: 200px">
+			                        <option value="">ALL</option>
+			                        {% for item in companies %}
+			                        <option value="{{ item.0 }}">{{ item.1 }}</option>
+			                        {% endfor %}
+			                    </select>
+			                </td>
+			                
+						
+							<td style="vertical-align: middle;">From date</td>
+							<td style="vertical-align: middle;">
+								<input type="text" value="" name="fromDate" id="id_txt_from_date" style="width:80px"/>
+							</td>
+							
+							<td style="vertical-align: middle;">To date</td>
+							<td style="vertical-align: middle;">
+								<input type="text" value="" name="toDate" id="id_txt_to_date" style="width:80px"/>
+							</td>
+							
+						</tr>
+						<tr>
+						 	<td style="vertical-align: middle;">Type:</td>
+			                <td style="vertical-align: middle;">
+			                    <select id="id_cbo_Type" name="topupType" style="width: 200px" onchange="return topupTypeChange();">
+			                        <option value="">All</option>
+			                        <option value="0">Topup Daily</option>
+			                        <option value="1">Topup Special</option>
+			                    </select>
+			                </td>
+	                		<td style="vertical-align: middle;">Send Time</td>
+							<td style="vertical-align: middle;">
+								<input type="text" value="" name="sendTime" id="id_txt_send_time" style="width:80px"/><input type="text" value="00:00" name="from_time" id="id_txt_from_time"  style="width:40px"/>
+							</td>
+							<td style="vertical-align: middle;">From Phone</td>
+							<td style="vertical-align: middle;">
+								<input type="text" id="id_txt_from_phone" name="fromPhone"/>
+								&nbsp;&nbsp;&nbsp;<input type="checkbox" id="isDefault" name="isDefault">&nbsp;&nbsp;Use Default
+							</td>
+						</tr>
+						<tr>
+							<td style="vertical-align: middle;">Sku:</td>
+			                <td style="vertical-align: middle;">
+			                    <select id="id_cbo_sku" name="sku" style="width: 200px">
+			                    <option value="">ALL</option>
+								{% for item in skus %}
+									<option value="{{ item.0 }}">{{ item.1 }}</option>
+								{% endfor %}
+			                    </select>
+			                </td>
+			                <td style="vertical-align: middle;">Entities:</td>
+			                <td style="vertical-align: middle;">
+			                	<input type="hidden" id="id_txt_entity" name="entity"/>
+			                	<button id="btnChoose" style="vertical-align: middle;">Choose Entity</button>
+			                	<a href="#" id="aDetailEntity" style="display:none">Show Entities</a>
+			                </td>
+			                <td style="vertical-align: middle;">Add Subscriber :</td>
+			                <td style="vertical-align: middle;">
+			                	<input type="checkbox" name="subscriber" id="subscriber"/>
+			                </td>
+						</tr>
+			        </table>
+	            </tr>
+	        </table>
+	        <table>
+				<tr>
+					<td style="vertical-align: middle;">
+	       				<input type="button" id="btnFilter" value="Search"/>
+						<input type="button" id="btn_exportcsv" value="Export csv"/>
+					</td>
+				</tr>
+				
+			</table>
+		</form>
+		<div id="div_activations">
+	        <table id="rowed2"></table>
+	        <div id="prowed2"></div>
+	    </div>
+	</div>
+	<div id="div_edit_sms_campaign" style="display:none" title="Edit Sms Campaign">
+	<form id="formFilterEdit" action="json/upload-file-header/" method="post" enctype="multipart/form-data">
+		<table class="ui-jqgrid-btable" cellspacing="0" cellpadding="0">
+        	<tr class="ui-widget-content jqgrow ui-row-ltr">
+	        	<td style="vertical-align: middle;">Name</td>
+				<td style="vertical-align: middle;"><input type="text" maxlength="250" id="id_txt_name_edit" name="nameedit" style="width: 220px"/></td>
+	        </tr>
+	       	<tr>
+				<td style="vertical-align: middle;">Enable:</td>
+				<td style="vertical-align: middle;">
+				    <select id="id_cbo_Enable_edit" name="enableedit" style="width: 100px">
+				        <option value="0">False</option>
+				        <option value="1">True</option>
+				    </select>
+				</td>
+			</tr>
+        </table>
+        
+	    <div id="import_file">
+			<table>
+				<tr>
+					<td><span>File Name:</span>
+		      		<input id="upFile1" type="file" name="1" accept=".csv"/></td>
+		      		<input type="hidden" id='result'/>
+		      		<input type="hidden" id='field_header' name='fieldHeader'/>
+		      	</tr>
+		      	<tr>
+		      	</tr>
+			</table>
+		</div>
+		<input type="hidden" id='id_edit' name='id_edit'/>
+		<br>
+	</form>
+	</div>
+	<div id="dlgChooseEntityDialog" style="display:none" title="Choose Entity">
+	    <table class="ui-jqgrid-btable" cellspacing="0" cellpadding="0">
+            <tr >
+                <th>Entity</th>
+                <th></th>
+                <th>Selected Entity</th>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <input type="text" id="dlgChooseEntityDialog_txtEntity" style="text-transform: uppercase;" /> 
+                    <select id="dlgChooseEntityDialog_cboLevel">
+                        <option value="">All</option>
+                        <option value="9">R1</option>
+                        <option value="10">R2</option>
+                        <option value="11">R3</option>
+                        <option value="12">R4</option>
+                        <option value="13">R5</option>
+                    </select> &nbsp;&nbsp;
+                	<input type="button" value=" Filter " id="dlgChooseEntityDialog_btnFilter"/>
+                </td>
+            </tr>
+            <tr class="ui-widget-content jqgrow ui-row-ltr">
+                <td>
+                    <select multiple="multiple" style="width:200px; height:400px" id="dlgChooseEntityDialog_multiEntityList">
+                        {% for item in entts %}
+                        <option value="{{ item.0 }}">{{ item.1 }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+                <td>
+                <input type="button" value=" Add " style="width:100px;" id="dlgChooseEntityDialog_btnAdd"/><br/>
+                <input type="button" value=" Remove " style="width:100px;" id="dlgChooseEntityDialog_btnRemove"/><br/>
+                </td>
+                <td>
+                    <select multiple="multiple" style="width:200px; height:400px" id="dlgChooseEntityDialog_multiSelectedEntityList">
+                    </select>
+                </td>
+            </tr>
+        </table>          
+	</div>
+{% endblock %}
+
+{% block endingscript %}
+<script type="text/javascript">
+	function initialize() {
+		var d = new Date();
+		d.setMonth(d.getMonth() - 6);
+		UIUtils.createUIDatePicker("#id_txt_from_date").datepicker('setDate', d);
+		UIUtils.createUIDatePicker("#id_txt_to_date").datepicker('setDate', new Date());
+		UIUtils.createUIDatePicker("#id_txt_send_time").datepicker('setDate', new Date()).datepicker('option', 'minDate', new Date());
+	}
+	
+	$(document).ready(function(){	
+		initialize();
+		//InitializeEntityFilter('#id_distributor', '#btnFilter');
+	    grid_activation = new SMSCampaignCustomerGrid({
+	        gridId : "#rowed2",
+	        navGridId : "#prowed2",
+	        container: {                //Container of Grid. Making grid auto resize.
+	            id:"#layoutCenterPane", // - Id of Container
+	            paddingWidth: 10,
+	            paddingHeight: 180
+	        },
+	        url: "/adminmng/createcustomerlist/grid/?a=1",
+	        filterFormIds: ["#formFilter1"],
+	        filterElements: {
+	        	"#id_txt_from_date": function get() { return UIUtils.getUIDate("#id_txt_from_date"); },
+		    	"#id_txt_to_date": function get() { return UIUtils.getUIDate("#id_txt_to_date"); },
+		    	
+	        }
+	    });
+	    
+	    mainLayout = $("#layoutcontainer").layout({
+	        west__resizable: false,
+	        north__resizable: false,
+	        west__size: 220,
+	        west__spacing_closed: 15,
+	        north__spacing_closed: 15,
+	        north__initClosed: true,
+	        center__onresize: function(pane, $pane, state, options) {
+	        }
+	    });
+		
+	    //InitializeEntityFilter('#id_distributor');
+	    $('#id_distributor').css("text-transform", "uppercase");
+	    $("#btnFilter").click(function() {
+	    	var valid_date = UIUtils.validateDate();
+	    	if (valid_date){
+	    		grid_activation.reloadGrid();
+	    	}
+	    });
+	    //grid_activation.reloadGrid();
+	
+	    dlgChoose = new ChooseEntityDialog({
+	    	'id': '#dlgChooseEntityDialog'
+	    });
+	    
+	    $("#btnChoose").click(function(){
+	        var old_entities = $('#id_txt_entity').val();
+	    	dlgChoose.Show({'Old_Entities': old_entities});
+	    });
+	    
+		$("#id_cbo_country").change(function() {
+			var idd_code = $(this).val();
+			if (idd_code == '') {
+				$("#id_cbo_operator").html("");
+				$("<option value=\"\">ALL</option>").appendTo("#id_cbo_operator");
+				return;
+			}
+			DoJSONGet("/adminmng/createcustomerlist/json/getcarrier/?iddcode=" + $("#id_cbo_country").val(), "", function(data) {
+				if(data != "") {
+	               	$("#id_cbo_operator").html("");
+	                   $("<option value=\"\">ALL</option>").appendTo("#id_cbo_operator");
+	                   $.each(data, function(i, item) {
+	                   	$("<option value=\"" + item[0] + "\">" + item[1] + "</option>").appendTo("#id_cbo_operator");
+	                   });
+	                   $("#id_cbo_operator option:first-child").attr("selected", "selected");
+	               } else {
+	                $("#id_cbo_operator").html("");
+	                   $("<option value=\"\">ALL</option>").appendTo("#id_cbo_operator");
+	               }
+			});
+		});
+		$("#id_cbo_country").change();
+	
+		$("#isDefault").change(function (e) {
+		   if($('#isDefault').is(':checked')){
+			   $("#id_txt_from_phone").attr("disabled","disabled");
+		   }else{
+			   $("#id_txt_from_phone").removeAttr("disabled");
+		   }
+		});
+		
+		//export csv
+		$("#btn_exportcsv").click(function() {
+			var valid_date = UIUtils.validateDate();
+	    	if (valid_date){
+				var country = $("#id_cbo_country").val();
+			    var operator = $("#id_cbo_operator").val();
+			    var language = $("#id_cbo_language").val();
+			    var company = $("#id_cbo_company").val();
+			    var topupType = $("#id_cbo_Type").val();		// 0: daily, 1: special
+			    var fromPhone = $("#id_txt_from_phone").val().trim();
+			    var fromDate = UIUtils.getUIDate("#id_txt_from_date");
+			    var toDate = UIUtils.getUIDate("#id_txt_to_date"); 
+			    var sendDate = UIUtils.getUIDate("#id_txt_send_time");
+			    var sendTime = $("#id_txt_from_time").val().trim();
+			    var sku = $('#id_cbo_sku').val();
+			    var entities = $('#id_txt_entity').val().trim();
+				var subscriber = $('#subscriber').is(':checked');
+				var isDefault = $('#isDefault').is(':checked');
+				
+				//check condition
+				if(country == "") {
+		            alert("Please choose a country");
+		            return ;
+		        }
+				if(operator == "") {
+		            alert("Please choose a operator");
+		            return ;
+		        }
+				
+	 			if(topupType == "") {
+	 				alert("Please choose topup type");
+	 				return;
+	 			}
+				
+				/* if(company == "" && sku == "") {
+					alert('Please choose a company or a sku');
+					return;
+				} */
+				
+				if($("#id_txt_from_date").val() == "") {
+		            alert("Please choose from date");
+		            return ;
+		        }
+				if($("#id_txt_to_date").val() == "") {
+		            alert("Please choose to date");
+		            return ;
+		        }
+				if((fromPhone != "" && !isDefault) || isDefault || $("#id_txt_send_time").val().trim() != "" || sendTime != "") {
+					if(!isDefault){
+						var phones = fromPhone;
+						if(phones == "") {
+			                alert("Please choose from phone");
+			                return ;
+			            }else{
+			            	if(!isValidPhone(phones)){
+			            		alert("Phones can only long or short code");
+				                return ;
+			            	}
+			            }
+					}
+					
+					if($("#id_txt_send_time").val().trim() == "" || sendTime == "") {
+		                alert("Please choose send time");
+		                return ;
+		            }
+					var valid = /^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$/.test(sendTime);
+					if(!valid){
+						alert("Send time is wrong format");
+		                return ;
+					}
+					var from_time = $("#id_txt_from_time").val().trim();
+					$("#id_txt_from_time").val(from_time);
+					var hour_from_time = from_time.split(':')[0];
+					var minute_from_time = from_time.split(':')[1];
+					
+					var current_time = new Date();
+					var date_compare_current = new Date(current_time.getFullYear(), current_time.getMonth(), current_time.getDate(), 0, 0, 0, 0);
+					
+					var send_time_date = $('#id_txt_send_time').datepicker('getDate');
+					var date_compare = new Date(send_time_date.getFullYear(), send_time_date.getMonth(), send_time_date.getDate(), 0, 0, 0, 0);
+					
+					if (date_compare.getTime() == date_compare_current.getTime()) {
+						if(hour_from_time < current_time.getHours()) {
+							alert('Sending time must be greater than or equal current time');
+							return;
+						} else if (hour_from_time == current_time.getHours()) {
+							if(minute_from_time < current_time.getMinutes()) {
+								alert('Sending time must be greater than or equal current time');
+								return;
+							}	
+						}
+					}
+				}
+				
+		         var url = "?countryId=" + country + "&operatorId=" + operator + "&fromPhone=" + fromPhone + "&topupType=" + topupType + "&companyId=" + company + "&sku=" + sku + "&subscriber=" + subscriber;
+			        url = url + "&language=" + language;
+			        url = url + "&fromDate=" + fromDate;
+			        url = url + "&toDate=" + toDate;
+			        url = url + "&sendDate=" + sendDate;
+			        url = url + "&sendTime=" + sendTime;
+			        url = url + "&entities=" + entities;
+			        url = url + "&isDefault=" + isDefault;
+				DoJSONGetBlock('json/export_sms_campaign/' + url,{
+					
+				},function (data){
+					if (data.HasError) {
+						showAlertMsg(data.Message, true);
+					}
+					else {
+						window.location.href = '/media/upload_files/sms_campaign_file/' + data.Url;
+				        grid_activation.reloadGrid();
+					}
+				});
+			}
+		});
+	
+	});		//end document ready
+		
+	function isValidPhone(phones){
+		var arr = phones.split(",");
+		if(arr.length > 0){
+			var isFirst = true;
+			var isLong = true;
+			for (i = 0; i < arr.length; i++) {
+				var tmp = arr[i].replace(/[^\d]*/gi,"")
+				if(isFirst){
+					isFirst = false;
+		    		if(tmp.length < 10){
+		    			isLong = false;
+			    	}
+		    	}else{
+		    		if((tmp.length < 10 && isLong) || (tmp.length >= 10 && !isLong)){
+		    			return false;
+			    	}
+		    	}
+			}
+		}
+		return true;
+	}
+		
+	//*=====Detail Diaglog======* //
+	function DetailDialog(config) {
+		this.dialogId = config['id'];
+		this.Initialize();	
+	}
+
+	$.extend(DetailDialog.prototype,BaseDialog.prototype);
+
+	DetailDialog.prototype.Initialize = function(){
+	}
+
+	DetailDialog.prototype.Hide = function() {
+		$( this ).dialog( "close" );
+	}
+	DetailDialog.prototype.Show = function() {
+		var t = this;
+		$( this.dialogId ).dialog({
+			modal: true,
+			width: 500,
+			//zIndex: -1,
+			buttons: {
+	            Save: function() {
+	                saveInfo();
+	            },
+	            Close: function() {
+	                $( this ).dialog( "close" );
+	            }
+	        },
+	        close: function() {
+	        },
+	        resizable: true
+		});
+	}
+	//*=====End Detail Diaglog======* //
+		
+	dlgDetail = new DetailDialog({
+		'id': '#div_edit_sms_campaign'
+	});
+		
+	function EditSmsCampainFile(pk) {
+		if (pk != null) {
+			DoJSONGet('json/load_sms_campaign/',{
+				'pk': pk
+			},function (data){
+				if (data.code == '1') {
+					$("#id_txt_name_edit").val(data.content.Name);
+					if(data.content.Enabled == true){
+						$("#id_cbo_Enable_edit").val(1);	
+					}else{
+						$("#id_cbo_Enable_edit").val(0);
+					}
+					$("#id_edit").val(pk);
+					$("#upFile1").val('');
+					$("#result").val('');
+					$("#field_header").val('');
+					dlgDetail.Show();
+				}
+				else
+					showAlertMsg('Error',true);
+			});
+		}
+		jQuery('.ui-jqdialog-titlebar-close').click();
+	}
+	function saveInfo() {
+		var file_name = $('#id_txt_name_edit').val().trim();
+		$('#id_txt_name_edit').val(file_name);
+		if(file_name == '') {
+			alert('Please enter name!');
+			return;
+		}	
+		$('#formFilterEdit').submit();
+	}
+	function topupTypeChange(){
+		if($("#id_cbo_Type").val()!=1){//!= special
+			$("#btnChoose").attr("disabled", true);
+		}else{
+			$("#btnChoose").attr("disabled", false);
+		}
+	}
+	$("#id_cbo_Type").change();
+	$("#formFilterEdit").submit(function(e){
+	    var formObj = $(this);
+	    var formURL = formObj.attr("action");
+	    var formData = new FormData(this);
+	    $.ajax({
+	        url: formURL,
+	    type: 'POST',
+	        data:  formData,
+	    mimeType:"multipart/form-data",
+	    contentType: false,
+	    cache: false,
+	    processData:false,
+	    success: function(data, textStatus, jqXHR)
+	    {
+	    	data = JSON.parse(data);
+	    	if (data.has_error == true) {
+	    		if (data.Error == 0){
+	    			alert('File must be in comma-separated csv format');
+					return;
+	    		}else{
+	    			alert(data.Message)
+	    			return;
+	    		}
+			}else{
+				$("#div_edit_sms_campaign").dialog( "close" );
+				grid_activation.reloadGrid();
+			}
+	    },
+	     error: function(jqXHR, textStatus, errorThrown)
+	     {
+	     }         
+	    });
+	    e.preventDefault(); //Prevent Default action.
+	    //e.unbind();
+	});
+	$('#upFile1').change(function(){
+		var fileName = $('input[type=file]').val().replace(/.*(\/|\\)/, '');
+		fileName = fileName.substring(0, fileName.length - 4)
+		$('#id_txt_name_edit').val(fileName);
+	});
+</script>
+<script type="text/javascript" src="/media/v2/js/apps/ats/gui/entity/setup_sms_campaign.js"></script>
+{% endblock %}

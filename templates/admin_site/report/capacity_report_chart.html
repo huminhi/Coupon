@@ -1,0 +1,95 @@
+<style type="text/css">
+	#chartdiv .jqplot-point-label, #charttotal_div .jqplot-point-label {
+	  border: 1.5px solid #aaaaaa;
+	  padding: 1px 3px;
+	  background-color: #FFD478;
+	}
+</style>
+
+<div id="charttotal_div" style="height:300px;width:1200px; margin: 0 auto 0 auto"></div>
+<div style="width:1200px; margin: 0 auto 0 auto';"><a href="javascript:plot1.resetZoom();">Reset Zoom</a></div>
+<br></br>
+<div id="chartdiv" style="height:300px;width:1200px; margin: 0 auto 0 auto"></div>
+<div style="width:1200px; margin: 0 auto 0 auto';"><a href="javascript:plot2.resetZoom();">Reset Zoom</a></div>
+
+<script type="text/javascript" src="/media/jqPlot/plugins/jqplot.dateAxisRenderer.min.js"></script>
+<script type="text/javascript" src="/media/jqPlot/plugins/jqplot.canvasTextRenderer.min.js"></script>
+<script type="text/javascript" src="/media/jqPlot/plugins/jqplot.canvasAxisTickRenderer.min.js"></script>
+<script type="text/javascript" src="/media/jqPlot/plugins/jqplot.highlighter.min.js"></script>
+<script type="text/javascript" src="/media/jqPlot/plugins/jqplot.enhancedLegendRenderer.min.js"></script>
+<script type="text/javascript" src="/media/jqPlot/plugins/jqplot.categoryAxisRenderer.min.js"></script>
+<script type="text/javascript" src="/media/jqPlot/plugins/jqplot.cursor.min.js"></script>
+<script type="text/javascript">
+	$.jqplot.config.enablePlugins = true;
+	
+	function renderChart(data) {
+		$("#charttotal_div").html("");
+		plot1 = $.jqplot('charttotal_div', data.DataTotal, {
+			//stackSeries: true,
+			legend:{show:true, renderer:$.jqplot.EnhancedLegendRenderer},
+		    title:'Total Calls',
+		    series: [{label: "Total Calls"}],
+		    seriesDefaults: {
+				showMarker: false, //{% if data.SmallData %} true {% else %} false {% endif %},
+				//lineWidth: 1.5,
+			},
+		    axes:{
+		    	xaxis: {
+	    			renderer:$.jqplot.DateAxisRenderer,
+	    			//tickInterval: 900,
+	    			tickRenderer: $.jqplot.CanvasAxisTickRenderer ,
+	    		      tickOptions: {
+	    		        angle: -20,
+	    		        formatString:'%a %m/%d/%Y\n%H:%M',
+	    		      }
+	    		}, 
+				yaxis: {
+	    			//tickInterval: 40,
+	    			min: 0,
+	    			tickOptions: {
+	    				fontSize:'8pt',
+	    				formatString:'%d',
+	    			}
+	    		}
+			},
+			cursor:{zoom:true, showTooltip:false} 
+		});
+		
+		$("#chartdiv").html("");
+		plot2 = $.jqplot('chartdiv', data.Data, {
+			//stackSeries: true,
+			legend:{
+				show:true, 
+				renderer:$.jqplot.EnhancedLegendRenderer,
+				placement:'outside',
+		        location:'s',
+		        marginTop: '30px'},
+		    title:'Capacity',
+		    series: data.Labels,
+		    seriesDefaults: {
+				showMarker: false,
+				lineWidth: 1.5,
+			},
+		    axes:{
+		    	xaxis: {
+	    			renderer:$.jqplot.DateAxisRenderer,
+	    			//tickInterval: 900,
+	    			tickRenderer: $.jqplot.CanvasAxisTickRenderer ,
+	    		      tickOptions: {
+	    		        angle: -20,
+	    		        formatString:'%a %m/%d/%Y %H:%M',
+	    		      }
+	    		}, 
+				yaxis: {
+	    			//tickInterval: 40,
+	    			min: 0,
+	    			tickOptions: {
+	    				fontSize:'8pt',
+	    				formatString:'%d',
+	    			}
+	    		}
+			},	    
+			cursor:{zoom:true, showTooltip:false} 
+		});
+	}
+</script>

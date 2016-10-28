@@ -1,0 +1,94 @@
+{% extends "grid_v2.html" %}
+{% load i18n %}
+{% block title %}ATS - CC Transactions - Admin Portal{% endblock %}
+{% block grid_content %}
+	<h1>CC Transactions</h1>
+	<table>
+		<tr>
+			<td style="vertical-align: middle;">From Date:</td>
+			<td style="vertical-align: middle;"><input type="text" value="" name="from_date" id="id_txt_fromdate"/>		
+			</td>			
+			<td style="vertical-align: middle;">Settled: </td> 
+			<td style="vertical-align: middle;"><select id="cbo_settled" style="width:175px;"><option value="">All</option><option value="True">True</option><option value="False">False</option></select></td>
+			<td style="vertical-align: middle;">Settled From Date:</td>
+			<td style="vertical-align: middle;"><input type="text" value="" name="settled_from_date" id="id_txt_settled_fromdate"/>		
+			</td>
+			<!-- <td style="vertical-align: middle;"><input type="checkbox" id="chk_settled" name="settled" > Settled</td><td style="vertical-align: middle;">AuthResp: <input type="text" value="" id="id_txt_authresp" style="width:70px;"/></td> -->
+			<td style="vertical-align: middle;">CCNumber: </td><td style="vertical-align: middle;"> <input type="text" value="" id="id_txt_ccnum" style="width:120px;"/></td>			
+			<td style="vertical-align: middle;">Seller:</td><td style="vertical-align: middle;"> <input type="text" value="" id="id_txt_seller" style="width:90px;"/></td>
+			<td style="vertical-align: middle;">BRIC: </td><td style="vertical-align: middle;"><input type="text" value="" id="id_txt_bric" style="width: 150px"/></td>
+			<td style="vertical-align: middle;">Action: </td>
+			<td style="vertical-align: middle;">
+				<select name='action' id="cbo_action">
+				<option value="">All</option>
+				<option value="Charge">Charge</option>
+				<option value="Return">Return</option>
+				<option value="Void">Void</option>
+				</select>
+			</td>
+			<td style="vertical-align: middle;">Card Type: </td>
+			<td style="vertical-align: middle;">
+				<select name='cardtype' id="cbo_cardtype">
+				<option value="">All</option>
+				{% for item in data.cardtype %}
+				<option value="{{ item }}">{{ item }}</option>
+				{% endfor %}
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td style="vertical-align: middle;">To Date:</td>
+			<td style="vertical-align: middle;"> <input type="text" value="" name="to_date" id="id_txt_todate"/></td>
+			<td style="vertical-align: middle;">AuthResp: </td>
+			<td style="vertical-align: middle;"><input type="text" value="" id="id_txt_authresp" style="width:30px;"/>&emsp;Status: 
+				<select name='status' id="cbo_status">
+				<option value="">All</option>
+				<option value="SUCCESS">SUCCESS</option>
+				<option value="FAIL">FAIL</option>
+				</select>
+			</td>
+			<td style="vertical-align: middle;">Settled To Date:</td>
+			<td style="vertical-align: middle;"> <input type="text" value="" name="settled_to_date" id="id_txt_settled_todate"/></td>		
+			<td style="vertical-align: middle;">Lunex TxId: </td><td style="vertical-align: middle;"><input type="text" value="" id="id_txt_txid" style="width: 120px"/></td>
+			<td style="vertical-align: middle;">MerchantId: </td>
+			<td style="vertical-align: middle;">
+			     <select id="id_txt_merchantid" name="merchantid">
+			     <option value=''>All</option>
+			     {% for item in data.merchant_id %}
+			     <option value="{{ item.0 }}">{{ item.1 }}</option>
+			     {% endfor %}
+			     </select>
+			</td>
+			<td style="vertical-align: middle;">Type: </td>
+			<td style="vertical-align: middle;">
+			<select name="type" id="cbo_type">
+			<option value="">All</option>
+			<option value="RESELLER">RESELLER</option>
+			<option value="CUSTOMER">CUSTOMER</option>
+			</select>
+			</td>	
+			<td style="vertical-align: middle;">Group: </td>
+			<td style="vertical-align: middle;">
+				<select name='group' id="cbo_group">
+				<option value="">All</option>
+				{% for item in data.usergroup %}
+				<option value="{{ item.0 }}">{{ item.1 }}</option>
+				{% endfor %}
+				</select>
+			</td>
+			<td style="vertical-align: middle;"></td>		
+			<td style="vertical-align: middle;">
+                <input type="button" value=" Filter " style="width:100px;" id="id_btn_filter"/><br/>
+            </td>  				
+		</tr>
+	</table>				
+	<div id="content-main">
+	<table id="rowed1" width="100%" height="100%"></table>
+	<div id="prowed1"></div>	
+	</div>
+	
+	<script src="/media/js/jquery-ui-1.8.16.custom.min.js" type="text/javascript"> </script>
+	<script src="/media/js/jquery.maskedinput-1.2.2.min.js" type="text/javascript"> </script>
+	<script src="/media/jqgrid/admin_site/report/cc_transactions_rpt.js" type="text/javascript"> </script>
+	
+{% endblock %}

@@ -1,0 +1,61 @@
+<style type="text/css">
+	#chartdiv .jqplot-point-label, #charttotal_div .jqplot-point-label {
+	  border: 1.5px solid #aaaaaa;
+	  padding: 1px 3px;
+	  background-color: #FFD478;
+	}
+</style>
+
+<div id="chartdiv" style="height:500px;width:1200px; margin: 0 auto 0 auto"></div>
+<div style="width:1200px; margin: 0 auto 0 auto';"><a href="javascript:plot1.resetZoom();">Reset Zoom</a></div>
+
+<script type="text/javascript" src="/media/jqPlot/plugins/jqplot.dateAxisRenderer.min.js"></script>
+<script type="text/javascript" src="/media/jqPlot/plugins/jqplot.canvasTextRenderer.min.js"></script>
+<script type="text/javascript" src="/media/jqPlot/plugins/jqplot.canvasAxisTickRenderer.min.js"></script>
+<script type="text/javascript" src="/media/jqPlot/plugins/jqplot.highlighter.min.js"></script>
+<script type="text/javascript" src="/media/jqPlot/plugins/jqplot.enhancedLegendRenderer.min.js"></script>
+<script type="text/javascript" src="/media/jqPlot/plugins/jqplot.categoryAxisRenderer.min.js"></script>
+<script type="text/javascript" src="/media/jqPlot/plugins/jqplot.cursor.min.js"></script>
+<script type="text/javascript">
+	$.jqplot.config.enablePlugins = true;
+	
+	function renderChart(data) {
+
+		$("#chartdiv").html("");
+		plot1 = $.jqplot('chartdiv', data.Data, {
+			//stackSeries: true,
+			legend:{
+				show:true, 
+				renderer:$.jqplot.EnhancedLegendRenderer,
+				placement:'outside',
+		        location:'s',
+		        marginTop: '30px'},
+		    title:'Profitability',
+		    series: data.Labels,
+		    seriesDefaults: {
+				showMarker: true,
+				lineWidth: 2,
+			},
+		    axes:{
+		    	xaxis: {
+	    			renderer:$.jqplot.DateAxisRenderer,
+	    			//tickInterval: 900,
+	    			tickRenderer: $.jqplot.CanvasAxisTickRenderer ,
+	    		      tickOptions: {
+	    		        angle: -20,
+	    		        formatString:'%m/%d/%Y',
+	    		      }
+	    		}, 
+				yaxis: {
+	    			//tickInterval: 40,
+	    			min: 0,
+	    			tickOptions: {
+	    				fontSize:'8pt',
+	    				formatString:'%.2f',
+	    			}
+	    		}
+			},	    
+			cursor:{zoom:true, showTooltip:false} 
+		});
+	}
+</script>

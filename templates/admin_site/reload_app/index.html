@@ -1,0 +1,52 @@
+{% extends "grid.html" %}
+{% load i18n %}
+{% block title %}Admin - Reload App - Admin Portal{% endblock %}
+
+{% block grid_content %}
+    <h1>Reload App Management</h1>
+    <div id="content-main">
+        <div>
+            <h2>Apps</h2>
+            <table>
+                <tr>
+                    <th>App Name</th>
+                    <th>Action</th>
+                    <th>PIDs</th>
+                </tr>
+                {% for app in items %}
+                <tr>
+                    <td style="vertical-align: middle;">{{ app.0 }}</td>
+                    <td style="vertical-align: middle;"><input type="button" id="btnReload_{{ app.2 }}" value="Reload" class="cBtnReload"/></td>
+                    <td style="vertical-align: middle;">
+                        <div id="divReload_{{ app.2 }}">
+	                        {% for pid in app.1 %}
+	                        <span>{{ pid }}</span>
+	                        {% endfor %}
+                        </div>
+                    </td>                    
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    <script type="text/javascript">
+    $(".cBtnReload").click(function() {
+    	var app = $(this).attr("id").replace("btnReload_", "");
+    	t = $(this);
+    	var params = {'app': app};
+    	t.attr("disabled", "disabled");
+    	DoJSONPost("/adminmng/reload-app/json/reloadapp/", params, function(data) {
+            if (data.ErrorCode == 0) {
+            	t.attr("disabled", "");
+            	var str = "";
+            	$.each(data.PIDs, function(index, value) {
+            		str += (" <span>" + value +"</span>");
+            	});
+            	$("#divReload_" + app).html(str);
+            }
+            t.attr("disabled", "");
+            showAlertMsg("Reloaded successfully.");
+    	});
+    });
+    </script>
+{% endblock %}
