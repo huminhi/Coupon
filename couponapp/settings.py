@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     # 'django.contrib.staticfiles',
-    'couponapp'
+    # 'couponapp'
 ]
 
 MIDDLEWARE = [
@@ -84,7 +84,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'Coupons',
         'USER': 'root',
-        'PASSWORD': '123abc#',
+        'PASSWORD': '123456',
         'HOST': 'localhost'
     },
 }
