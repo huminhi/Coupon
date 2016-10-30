@@ -1,8 +1,26 @@
-<html>
-<head>
-    <h1>My coupon app.</h1>
-</head>
-<body>
+{% extends "admin/base.html" %}
 
-</body>
-</html>
+{% block title %} Home {% endblock %}
+
+{% block hot-deal %}
+    <img src="/../coupons/couponapp/media/images/hotdeal.jpg">
+{% endblock %}
+
+{% block search %} Searching for something{% endblock %}
+
+{% block content %}
+    <table>
+        <tr>
+            {% block side-bar %}
+                <td class="colspan=2">Side bar</td>
+            {% endblock %}
+            {% block deals %}
+                <td class="colspan=10">Coupons</td>
+            {% endblock %}
+        </tr>
+    </table>
+{% endblock %}
+
+{% block script %}
+    <script src="/../coupons/couponapp/media/js/home.js"></script>
+{% endblock %}

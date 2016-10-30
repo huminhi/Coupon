@@ -1,4 +1,5 @@
 from django.http import HttpResponse
+from django.template.backends.django import Template
 from  django.views.generic.base import TemplateResponse, TemplateResponseMixin, TemplateView
 # from django.views.generic import
 
