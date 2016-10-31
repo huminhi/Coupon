@@ -1,0 +1,9 @@
+{% extends "lunex/site_base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "ERROR: " %}{% trans error_title %}{% endblock %}
+
+{% block content %}
+<p class='error' style='width:60%;'>{% trans message %}{% if http_referer %}<span style='float:right;'><a href='{{ http_referer }}'>Back</a></span>{% endif %}</p>
+{% endblock %}
+

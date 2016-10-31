@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ LANGUAGE_CODE }}" xml:lang="{{ LANGUAGE_CODE }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
+<head>
+<meta http-equiv='Content-Type' content='text/html; charset-UTF-8' />
+<link rel="stylesheet" href="/static/css/blueprint/screen.css" type="text/css" media="screen,projection" />
+<link rel="stylesheet" href="/static/css/blueprint/print.css" type="text/css" media="print" />
+<!--[if IE]><link rel="stylesheet" href="/static/css/blueprint/ie.css" type="text/css" media="screen,projection" /><![endif]-->
+<!-- jQuery CSS -->
+<link rel='stylesheet' href='/static/css/smoothness/jquery-ui-1.7.1.custom.css' type='text/css' />
+<link rel="stylesheet" href="/static/js/themes/basic/grid.css" type="text/css" />
+<link rel="stylesheet" href="/static/js/themes/jqModal.css" type="text/css" />
+<!-- WuFoo styles -->
+<link rel="stylesheet" href="/static/css/structure.css" type="text/css" />
+<link rel="stylesheet" href="/static/css/form.css" type="text/css" />
+<link rel="stylesheet" href="/static/css/theme.css" type="text/css" />
+{% block extrastyle %}{% endblock %}
+
+<script type="text/javascript" src="/static/js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery-ui-1.7.1.custom.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery.bgiframe.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery.jqGrid.js"></script>
+<script type="text/javascript" src="/static/js/js/jqModal.js"></script>
+<script type="text/javascript" src="/static/js/js/jqDnR.js"></script>
+<script type="text/javascript" src="/static/js/js/jquery.fmatter.js"></script>
+<script type="text/javascript" src="/static/js/lunex.js"></script>
+<script type="text/javascript" src="/static/js/jquery.lunex.js"></script>
+<script type="text/javascript" src="/static/js/json2.js"></script>
+<script type="text/javascript" src="/static/js/wufoo.js"></script>
+{% block extrajs %}{% endblock %}
+
+{% block extrahead %}{% endblock %}
+{% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE" />{% endblock %}
+</head>
+{% load i18n %}
+
+<body class="{% if is_popup %}popup {% endif%}{% block bodyclass %}{% endblock %}">
+{% block content %}
+{% endblock %}
+</body>
+</html>
+

@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ LANGUAGE_CODE }}" xml:lang="{{ LANGUAGE_CODE }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
+<head>
+<title>{% block title %}{% endblock %}</title>
+<meta http-equiv='Content-Type' content='text/html; charset-UTF-8' />
+<link rel="stylesheet" href="/static/common/css/blueprint/screen.css" type="text/css" media="screen,projection" />
+<link rel="stylesheet" href="/static/common/css/blueprint/print.css" type="text/css" media="print" />
+<!--[if IE]><link rel="stylesheet" href="/static/common/css/blueprint/ie.css" type="text/css" media="screen,projection" /><![endif]-->
+<!-- WuFoo styles -->
+<link rel="stylesheet" href="/static/common/css/form.css" type="text/css" />
+<link rel="stylesheet" href="/static/common/css/structure.css" type="text/css" />
+<link rel="stylesheet" href="/static/common/css/theme.css" type="text/css" />
+<!-- jQuery CSS -->
+{% block jqthemecss %}<link rel='stylesheet' href='/static/common/css/lunex/jquery-ui-1.7.2.custom.css' type='text/css' />{% endblock %}
+<link rel="stylesheet" href="/static/common/css/ui.jqgrid.css" type="text/css" />
+<link rel="stylesheet" href="/static/common/js/themes/basic/grid.css" type="text/css" />
+<link rel="stylesheet" href="/static/common/js/themes/jqModal.css" type="text/css" />
+<link rel="stylesheet" href="/static/common/css/jquery.autocomplete.css" type="text/css" />
+<link rel="stylesheet" href="/static/common/css/thickbox.css" type="text/css" />
+<!-- lunex stylesheets -->
+<link rel='stylesheet' href='/static/common/css/lunex/core.css' type='text/css' />
+<link rel='stylesheet' href='/static/common/css/lunex/form.css' type='text/css' />
+<link rel='stylesheet' href='/static/common/css/lunex/table.css' type='text/css' />
+<link rel='stylesheet' href='/static/common/css/lunex/jqueryslidemenu.css' type='text/css' />
+{% block sitestyle %}{% endblock %}{% block extrastyle %}{% endblock %}
+
+<script type="text/javascript" src="/static/common/js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="/static/common/js/jquery-ui-1.7.2.custom.min.js"></script>
+<script type="text/javascript" src="/static/common/js/jquery.bgiframe.min.js"></script>
+<script type="text/javascript" src="/static/common/js/i18n/grid.locale-en.js"></script>
+<script type="text/javascript" src="/static/common/js/jquery.jqGrid.min.js"></script>
+<script type="text/javascript" src="/static/common/js/json2.js"></script>
+<script type='text/javascript' src='/static/common/js/jqueryslidemenu.js'></script>
+<script type='text/javascript' src='/static/common/js/thickbox-compressed.js'></script>
+<script type='text/javascript' src='/static/common/js/jquery.autocomplete.js'></script>
+<!-- <script type="text/javascript" src="/static/common/js/wufoo.js"></script> -->
+{% block sitejs %}{% endblock %}
+{% block extrajs %}{% endblock %}
+
+{% block extrahead %}{% endblock %}
+{% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE" />{% endblock %}
+</head>
+{% load i18n %}
+
+<body class="{% if is_popup %}popup {% endif%}{% block bodyclass %}{% endblock %}"
+  topmargin='0' leftmargin='0' bgcolor='#FFFFFF'>
+<!-- Container -->
+<div>
+  <div class='header'></div>
+  <div class='menu'>{% block header %}{% endblock %}</div>
+
+<!-- content -->
+<div class='content {% block contentclass %}{% endblock %}'>
+{% block content %}
+{% endblock %}
+</div>
+<!-- /content -->
+
+{% block footer %}<div id="footer"></div>{% endblock %}
+</div>
+<!-- END Container -->
+</body>
+</html>
+

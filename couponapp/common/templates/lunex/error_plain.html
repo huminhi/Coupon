@@ -1,0 +1,13 @@
+{% extends "lunex/plain_base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "ERROR" %}{% endblock %}
+
+{% block content %}
+<div class='error'>
+{% with errors|length as errcount %}{% ifequal errcount 1 %}{% trans errors.0 %}{% else %}<ul class='errorlist'>{% for msg in errors %}
+  <li>{% trans msg %}</li>
+{% endfor %}</ul>{% endifequal %}{% endwith %}
+</div>
+{% endblock %}
+
