@@ -1,39 +1,42 @@
-{% extends "admin/base.html" %}
+{% extends "base.html" %}
 
 {% block title %} Home {% endblock %}
 
 {% block hot-deals %}
     {% load staticfiles %}
-    <img class="carousel-inner" src="{% static "images/hotdeal.jpg" %}">
+    <img class="carousel-inner countdown" src="{% static "images/hotdeal.jpg" %}">
 {% endblock %}
 
 {% block search %}
     <div class="col-lg-12 row">
         <label class="text-justify col-lg-3 center-block">Search</label>
         <input class="input-sm col-lg-5 col-md-2 col-sm-1" placeholder="Search for something" type="text">
-        <button class="btn btn-default btn-primary col-lg-1" type="button" id="search">Search
+        <button class="btn btn-default btn-primary col-lg-1" type="button" id="search">Search</button>
     </div>
 {% endblock %}
 
 {% block content %}
     <div class="col-lg-12">
         <div class="row">
-            {% block side-bar %}
-                <div class="col-lg-3">Side bar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-                </div>
-            {% endblock %}
-            {% block deals %}
-                <div class="col-lg-9">Coupons &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                </div>
-            {% endblock %}
+            <div class="col-lg-3">
+                {% block side-bar %}
+                    Side bar
+                {% endblock %}
+            </div>
+            <div class="col-lg-9">
+                {% block deals %}
+{#                    {%  for coupon in coupons %}#}
+                {% endblock %}
+            </div>
         </div>
     </div>
 {% endblock %}
 
-{% block script %}
+{% block ending-script %}
     {% load staticfiles %}
-    <script type="text/javascript" src="{% static "js/jquery-3.1.1.min.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/bootstrap.min.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/home.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/home/home.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/home/countdown.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/home/magnific.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/home/fitvids.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/home/magnific.min.js" %}"></script>
 {% endblock %}

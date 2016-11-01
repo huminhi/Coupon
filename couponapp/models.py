@@ -646,7 +646,7 @@ class WpLinks(models.Model):
 
 class WpOptions(models.Model):
     option_id = models.BigIntegerField(primary_key=True)
-    option_name = models.CharField(unique=True, max_length=573)
+    option_name = models.CharField(unique=True, max_length=255)
     option_value = models.TextField()
     autoload = models.CharField(max_length=60)
     class Meta:
@@ -661,7 +661,7 @@ class WpPostmeta(models.Model):
         db_table = u'wp_postmeta'
 
 class WpPosts(models.Model):
-    id = models.BigIntegerField(db_column='ID') # Field name made lowercase.
+    id = models.IntegerField(primary_key=True, db_column='ID')
     post_author = models.BigIntegerField()
     post_date = models.DateTimeField()
     post_date_gmt = models.DateTimeField()
