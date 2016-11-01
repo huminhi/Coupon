@@ -19,4 +19,5 @@ from django.contrib import admin
 urlpatterns = [
     # url(r'^admin/', admin.site.urls),
     url(r'^', include('couponapp.home.urls')),
+    url(r'^auth/', include('auth.urls')),
 ]

@@ -84,7 +84,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'Coupons',
         'USER': 'root',
-        'PASSWORD': '123abc#',
+        'PASSWORD': '123456',
         'HOST': 'localhost'
     },
 }
