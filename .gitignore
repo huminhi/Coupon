@@ -1,3 +1,4 @@
 .idea/
 *.pyc
 couponapp/__pycache__/
+.bin

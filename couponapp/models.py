@@ -122,7 +122,7 @@ class CappCmsPages(models.Model):
     meta_keyword = models.CharField(max_length=450)
     meta_description = models.CharField(max_length=750)
     page_content = models.TextField()
-    image_name = models.CharField(max_length=765)
+    image_name = models.ImageField(max_length=765)
     display_status = models.CharField(max_length=135)
     status = models.CharField(max_length=135)
     class Meta:

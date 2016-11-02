@@ -25,7 +25,11 @@
             </div>
             <div class="col-lg-9">
                 {% block deals %}
-{#                    {%  for coupon in coupons %}#}
+                    {% load staticfiles %}
+                    {%  for coupon in coupons %}
+{#                        <a href="#"><img class="lazy col-lg-4 thumbnail popup-text" data-original="images/1.jpg" src="{% static "images/1.jpg" %}"></a>#}
+                        <label>coupon.coupon_code</label>
+                    {% endfor %}
                 {% endblock %}
             </div>
         </div>
@@ -39,4 +43,5 @@
     <script type="text/javascript" src="{% static "js/home/magnific.min.js" %}"></script>
     <script type="text/javascript" src="{% static "js/home/fitvids.min.js" %}"></script>
     <script type="text/javascript" src="{% static "js/home/magnific.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/home/jquery.lazyload.js" %}"></script>
 {% endblock %}

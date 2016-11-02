@@ -1,7 +1,7 @@
 from django.conf.urls import url
-from auth.views import Authentication
+from auth import views
 
 urlpatterns = [
-    url(r'^login$', Authentication.login(), name='login'),
-    url(r'^logout$', Authentication.logout(), name='logout'),
+    url(r'^login$', views.login, name='login'),
+    url(r'^logout$', views.logout, name='logout'),
 ]

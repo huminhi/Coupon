@@ -37,7 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'couponapp'
+    'couponapp',
+    # 'oauth2_provider',
+    # 'corsheaders'
 ]
 
 MIDDLEWARE = [
@@ -48,6 +50,19 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'corsheaders.middleware.CorsMiddleware'
+]
+
+# MIDDLEWARE_CLASSES = [
+#     'corsheaders.middleware.CorsMiddleware',
+#     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
+#     'oauth2_provider.middleware.OAuth2TokenMiddleware',
+# ]
+
+AUTHENTICATION_BACKENDS = [
+    'oauth2_provider.backends.OAuth2Backend',
+    # Uncomment following if you want to access the admin
+    #'django.contrib.auth.backends.ModelBackend'
 ]
 
 ROOT_URLCONF = 'couponapp.urls'
@@ -76,15 +91,11 @@ WSGI_APPLICATION = 'couponapp.wsgi.application'
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    # }
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'Coupons',
         'USER': 'root',
-        'PASSWORD': '123456',
+        'PASSWORD': '123abc#',
         'HOST': 'localhost'
     },
 }
@@ -123,4 +134,10 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
-MEDIA_ROOT = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+MEDIA_URL = '/media/'
+
+CORS_ORIGIN_ALLOW_ALL = True
+
