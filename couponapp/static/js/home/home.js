@@ -16,6 +16,20 @@ $(function() {
 	});
 });
 
+
+// Countdown
+// To change date, simply edit: var endDate = January 26, 2015 20:39:00";
+// $(function() {
+//   var endDate = "January 26, 2017 20:39:00";
+//   $('.countdown').countdown({
+//     date: endDate,
+//     render: function(data) {
+//       $(this.el).html('<div><div class="days"><span>' + this.leadingZeros(data.days, 2) + '</span><span>days</span></div><div class="hours"><span>' + this.leadingZeros(data.hours, 2) + '</span><span>hours</span></div></div><div class="tk-countdown-ms"><div class="minutes"><span>' + this.leadingZeros(data.min, 2) + '</span><span>minutes</span></div><div class="seconds"><span>' + this.leadingZeros(data.sec, 2) + '</span><span>seconds</span></div></div>');
+//     }
+//   });
+// });
+
+
 $(document).ready(function() {
     $('.carousel').carousel({
       interval: 6000

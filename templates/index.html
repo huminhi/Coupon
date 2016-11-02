@@ -4,7 +4,30 @@
 
 {% block hot-deals %}
     {% load staticfiles %}
-    <img class="carousel-inner countdown" src="{% static "images/hotdeal.jpg" %}">
+    <div id="hot-deals" class="carousel nivoSlider">
+        <div class="carousel-inner">
+            <div class="item">
+                <img src="{% static "images/hotdeal.jpg" %}">
+            </div>
+            <div class="item active">
+                <div class="carousel-caption countdown-caption">
+                    <h3>Jack Daniels Huge Pack</h3>
+                    <!-- COUNTDOWN -->
+                    <div data-countdown="1478560257011" class="countdown">
+                        <div class="days"><span class="count"></span><span class="title">Days</span></div>
+                        <div class="hours"><span class="count"></span><span class="title">Hours</span></div>
+                        <div class="minutes"><span class="count"></span><span class="title">Minutes</span></div>
+                        <div class="seconds"><span class="count"></span><span class="title">Seconds</span></div>
+                    </div>
+                    <a href="#" class="btn btn-primary btn-large">Save 70%</a>
+                </div>
+                <img src="{% static "images/hotdeal.jpg" %}">
+
+                <a class="carousel-control left" href="#hot-deals" data-slide="prev"></a>
+                <a class="carousel-control right" href="#hot-deals" data-slide="next"></a>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block search %}
@@ -26,9 +49,11 @@
             <div class="col-lg-9">
                 {% block deals %}
                     {% load staticfiles %}
-                    {%  for coupon in coupons %}
-{#                        <a href="#"><img class="lazy col-lg-4 thumbnail popup-text" data-original="images/1.jpg" src="{% static "images/1.jpg" %}"></a>#}
-                        <label>coupon.coupon_code</label>
+                    {% for coupon in coupons %}
+                        <a href="#" class="thumbnail col-lg-4"><img class="lazy popup-text countdown countdown-inline"
+                                                                    data-original="{% static "images/1.jpg" %}"
+                                                                    src="{% static "images/1.jpg" %}">
+                            <span>{{ coupon.coupon_code }}</span></a>
                     {% endfor %}
                 {% endblock %}
             </div>
