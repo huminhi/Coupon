@@ -1,3 +1,4 @@
+__author__ = 'Hieu Huynh'
 from django.views.generic.base import TemplateResponseMixin, TemplateView, TemplateResponse
 from couponapp import models
 from django.conf import settings

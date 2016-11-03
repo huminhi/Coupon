@@ -1,3 +1,4 @@
+__author__ = 'Hieu Huynh'
 from django.conf.urls import url, include
 from couponapp.home import views
 

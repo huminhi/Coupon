@@ -8,8 +8,9 @@
     <title>{% block title %}Home{% endblock %}</title>
     {% block stylesheet %}
         {% load staticfiles %}
-        <link rel="stylesheet" type="text/css" href="{% static "css/bootstrap.min.css" %}">
+        <link rel="stylesheet" type="text/css" href="{% static "css/bootstrap.css" %}">
         <link rel="stylesheet" type="text/css" href="{% static "css/bootstrap-theme.min.css" %}">
+{#        <link rel="stylesheet" type="text/css" href="{% static "css/jquery.countdown.css" %}">#}
     {% endblock %}
     {% block starting-script %}{% endblock %}
 </head>
@@ -193,12 +194,16 @@
 
 <body>
 <div id="hot-deals" class="carousel">{% block hot-deals %}{% endblock %}</div>
-<div id="search" class="container">{% block search %}{% endblock %}</div>
-<div id="container" class="container">{% block content %}{% endblock %}</div>
+<div class="container">
+    <div id="search" class="row-fluid">{% block search %}{% endblock %}</div>
+    <div id="container" class="container">{% block content %}{% endblock %}</div>
+</div>
 </body>
 {% load staticfiles %}
 <script type="text/javascript" src="{% static "js/jquery-3.1.1.min.js" %}"></script>
 <script type="text/javascript" src="{% static "js/bootstrap.min.js" %}"></script>
-<script type="text/javascript" src="{% static "js/home/home.js" %}"></script>
+<script type="text/javascript" src="{% static "js/jquery.plugin.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/jquery.countdown.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/jquery.lazyload.min.js" %}"></script>
 {% block ending-script %}{% endblock %}
 </html>
